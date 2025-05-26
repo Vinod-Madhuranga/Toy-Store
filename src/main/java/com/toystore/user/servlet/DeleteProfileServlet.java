@@ -16,7 +16,7 @@ public class DeleteProfileServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        userManager = UserManager.getInstance();
+        userManager = UserManager.getInstance(getServletContext());
     }
 
     @Override
@@ -30,12 +30,27 @@ public class DeleteProfileServlet extends HttpServlet {
             return;
         }
 
-        try {
-            // Delete the user from the system
-            boolean deleted = userManager.deleteUser(currentUser.getEmail());
+        // Validate CSRF token
+        String csrfToken = request.getParameter("csrfToken");
+        String sessionCsrfToken = (String) session.getAttribute("csrfToken");
+        if (csrfToken == null || !csrfToken.equals(sessionCsrfToken)) {
+            request.setAttribute("error", "Invalid CSRF token");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
 
+        // Verify password
+        String password = request.getParameter("deletePassword");
+        if (password == null || !userManager.authenticateUser(currentUser.getEmail(), password)) {
+            request.setAttribute("error", "Incorrect password");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            // Delete user
+            boolean deleted = userManager.deleteUser(currentUser.getEmail());
             if (deleted) {
-                // Invalidate session and redirect to login with success message
                 session.invalidate();
                 response.sendRedirect("login.jsp?success=Your+profile+has+been+deleted+successfully");
             } else {

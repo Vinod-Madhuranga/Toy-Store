@@ -18,7 +18,7 @@ public class ResetPasswordServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        userManager = UserManager.getInstance();
+        userManager = UserManager.getInstance(getServletContext());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

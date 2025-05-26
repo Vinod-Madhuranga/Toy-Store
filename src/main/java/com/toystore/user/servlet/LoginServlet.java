@@ -16,7 +16,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        userManager = UserManager.getInstance();
+        super.init();
+        userManager = UserManager.getInstance(getServletContext());
     }
 
     @Override

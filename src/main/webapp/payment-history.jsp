@@ -48,6 +48,7 @@
             z-index: 0;
         }
 
+
         .payment-container::after {
             content: '';
             position: absolute;

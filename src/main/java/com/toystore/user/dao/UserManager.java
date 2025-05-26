@@ -1,54 +1,56 @@
 package com.toystore.user.dao;
 
 import com.toystore.user.model.User;
+
+import javax.servlet.ServletContext;
 import java.io.*;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-import javax.servlet.ServletContext;
 
 public class UserManager {
-    private static final String USER_FILE = "E:/Personal Projects/Online Toy Store/src/main/webapp/WEB-INF/users.txt";
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     private static UserManager instance;
     private List<User> users;
+    private String userFilePath;
 
-    private UserManager() {
+    private UserManager(ServletContext context) {
         users = new LinkedList<>();
+        userFilePath = "E:Personal Projects/Online Toy Store/src/main/webapp/WEB-INF/users.txt";
         loadUsers();
     }
 
-    public static UserManager getInstance() {
+    public static UserManager getInstance(ServletContext context) {
         if (instance == null) {
-            instance = new UserManager();
+            instance = new UserManager(context);
         }
         return instance;
     }
 
-    public void setServletContext(ServletContext context) {
-        // Not needed anymore since we're using absolute path
-    }
-
     private void loadUsers() {
-        File file = new File(USER_FILE);
+        File file = new File(userFilePath);
         users.clear();
         if (!file.exists()) {
-            System.err.println("Users file not found at: " + USER_FILE);
+            System.err.println("Users file not found at: " + userFilePath);
             return;
         }
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 6) {
+                String[] parts = line.split(",", -1); // -1 to include empty trailing fields
+                if (parts.length >= 11) {
                     User user = new User(
-                        parts[0], // fullName
-                        parts[1], // username
-                        parts[2], // email
-                        parts[3], // password
-                        parts[4], // address
-                        parts[5]  // phoneNumber
+                            parts[0], // fullName
+                            parts[1], // username
+                            parts[2], // email
+                            parts[3], // password
+                            parts[4], // address
+                            parts[5]  // phoneNumber
                     );
+                    user.setBio(parts[6].isEmpty() ? null : parts[6]);
+                    user.setBirthDate(parts[7].isEmpty() ? null : LocalDate.parse(parts[7]));
+                    user.setGender(parts[8].isEmpty() ? null : parts[8]);
+                    user.setAvatarUrl(parts[9].isEmpty() ? null : parts[9]);
+                    user.setTwoFactorEnabled(Boolean.parseBoolean(parts[10]));
                     users.add(user);
                 }
             }
@@ -60,7 +62,7 @@ public class UserManager {
 
     private void saveUsers() {
         try {
-            File file = new File(USER_FILE);
+            File file = new File(userFilePath);
             if (!file.exists()) {
                 File parentDir = file.getParentFile();
                 if (parentDir != null && !parentDir.exists()) {
@@ -106,12 +108,11 @@ public class UserManager {
         return true;
     }
 
-    public boolean deleteUser(String username) {
-        User user = findUserByEmail(username);
+    public boolean deleteUser(String email) {
+        User user = findUserByEmail(email);
         if (user == null) {
             return false;
         }
-
         users.remove(user);
         saveUsers();
         return true;
@@ -123,9 +124,6 @@ public class UserManager {
 
     public boolean authenticateUser(String email, String password) {
         User user = findUserByEmail(email);
-        if (user != null && user.getPassword().equals(password)) {
-            return true;
-        }
-        return false;
+        return user != null && user.getPassword().equals(password);
     }
-} 
+}
