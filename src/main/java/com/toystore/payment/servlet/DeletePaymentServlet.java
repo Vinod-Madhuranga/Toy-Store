@@ -1,0 +1,27 @@
+package com.toystore.payment.servlet;
+
+import com.toystore.payment.dao.PaymentDAO;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/delete-payment")
+public class DeletePaymentServlet extends HttpServlet {
+    private PaymentDAO paymentDAO;
+
+    @Override
+    public void init() {
+        paymentDAO = new PaymentDAO();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        String id = request.getParameter("id");
+        paymentDAO.deletePayment(id);
+        response.sendRedirect("payment-history");
+    }
+} 

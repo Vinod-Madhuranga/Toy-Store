@@ -1,0 +1,5 @@
+01c1dee9-ceb7-4cb6-a701-386ec91658c0,loop coaster.jpeg,Loop coaster,Loop coaster,25.0,3-5
+01c1dee9-ceb7-4cb6-a701-125ec91658c0,balls.jpeg,Balls Pack,10 balls have one pack,15.0,6-8
+01c1dee9-ceb7-4cb6-a701-634ec91658c0,teddy.jpeg,Teddy,Teddy,19.99,0-2
+01c1dee9-ceb7-4cb6-a701-163ec91658c0,Toy car.jpeg,Toy Cars,Car,5.0,8-12
+01c1dee9-ceb7-4cb6-a701-274ec91658c0,Segway Ninebot.jpeg,Segway Ninebot,Segway Ninebot,50.0,9

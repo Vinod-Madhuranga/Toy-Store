@@ -1,0 +1,10 @@
+TEDDY001,Teddy Bear,29.99,Soft and cuddly teddy bear,50,PLUSH
+BLOCK001,Building Blocks,19.99,Colorful building blocks set,100,CONSTRUCTION
+DOLL001,Barbie Doll,24.99,Classic Barbie doll,75,DOLLS
+CAR001,Remote Car,39.99,Remote controlled racing car,30,VEHICLES
+PUZZLE001,Jigsaw Puzzle,14.99,100-piece jigsaw puzzle,60,PUZZLES
+GAME001,Board Game,29.99,Family board game,40,GAMES
+ROBOT001,Robot Toy,49.99,Interactive robot toy,25,ELECTRONIC
+TRAIN001,Toy Train,34.99,Wooden train set,35,VEHICLES
+LEGO001,LEGO Set,59.99,Creative building set,45,CONSTRUCTION
+PUPPET001,Hand Puppet,9.99,Animal hand puppets,80,PLUSH 
