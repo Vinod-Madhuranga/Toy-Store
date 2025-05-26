@@ -12,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 @WebServlet("/update-profile")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -121,35 +124,49 @@ public class UpdateProfileServlet extends HttpServlet {
         }
 
         // Generate CSRF token
-        String csrfToken = java.util.UUID.randomUUID().toString();
+        String csrfToken = UUID.randomUUID().toString();
         session.setAttribute("csrfToken", csrfToken);
         request.setAttribute("csrfToken", csrfToken);
 
         // Mock data for JSP (replace with actual data in production)
-        request.setAttribute("activeSessions", java.util.Arrays.asList(
+        List<Session> activeSessions = Arrays.asList(
                 new Session("1", "DESKTOP", "Laptop", "New York", "2025-05-26 10:00:00", true),
                 new Session("2", "MOBILE", "iPhone", "London", "2025-05-25 15:30:00", false)
-        ));
-        request.setAttribute("orders", java.util.Arrays.asList(
+        );
+        request.setAttribute("activeSessions", activeSessions);
+
+        List<Order> orders = Arrays.asList(
                 new Order("1001", "2025-05-20", "COMPLETED", 59.99),
                 new Order("1002", "2025-05-15", "PENDING", 29.99)
-        ));
-        request.setAttribute("activities", java.util.Arrays.asList(
+        );
+        request.setAttribute("orders", orders);
+
+        List<Activity> activities = Arrays.asList(
                 new Activity("LOGIN", "Logged in from New York", "2025-05-26 10:00:00"),
                 new Activity("PURCHASE", "Purchased a teddy bear", "2025-05-20 12:30:00")
-        ));
+        );
+        request.setAttribute("activities", activities);
+
         request.setAttribute("wishlistCount", 3);
         request.setAttribute("cartCount", 2);
 
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
-    // Updated model classes with proper getters
-    private static class Session {
-        String id, deviceType, deviceName, location, lastActive;
-        boolean current;
+    // Session model class with proper JavaBean conventions
+    public static class Session {
+        private String id;
+        private String deviceType;
+        private String deviceName;
+        private String location;
+        private String lastActive;
+        private boolean current;
 
-        Session(String id, String deviceType, String deviceName, String location, String lastActive, boolean current) {
+        public Session() {
+            // Default constructor required for JavaBean
+        }
+
+        public Session(String id, String deviceType, String deviceName, String location, String lastActive, boolean current) {
             this.id = id;
             this.deviceType = deviceType;
             this.deviceName = deviceName;
@@ -158,19 +175,66 @@ public class UpdateProfileServlet extends HttpServlet {
             this.current = current;
         }
 
-        public String getId() { return id; }
-        public String getDeviceType() { return deviceType; }
-        public String getDeviceName() { return deviceName; }
-        public String getLocation() { return location; }
-        public String getLastActive() { return lastActive; }
-        public boolean isCurrent() { return current; }
+        // Getters and Setters
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getDeviceType() {
+            return deviceType;
+        }
+
+        public void setDeviceType(String deviceType) {
+            this.deviceType = deviceType;
+        }
+
+        public String getDeviceName() {
+            return deviceName;
+        }
+
+        public void setDeviceName(String deviceName) {
+            this.deviceName = deviceName;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
+        public String getLastActive() {
+            return lastActive;
+        }
+
+        public void setLastActive(String lastActive) {
+            this.lastActive = lastActive;
+        }
+
+        public boolean isCurrent() {
+            return current;
+        }
+
+        public void setCurrent(boolean current) {
+            this.current = current;
+        }
     }
 
-    private static class Order {
-        private final String orderId;
-        private final String orderDate;
-        private final String status;
-        private final double totalAmount;
+    // Order model class with proper JavaBean conventions
+    public static class Order {
+        private String orderId;
+        private String orderDate;
+        private String status;
+        private double totalAmount;
+
+        public Order() {
+            // Default constructor required for JavaBean
+        }
 
         public Order(String orderId, String orderDate, String status, double totalAmount) {
             this.orderId = orderId;
@@ -179,17 +243,49 @@ public class UpdateProfileServlet extends HttpServlet {
             this.totalAmount = totalAmount;
         }
 
-        // Getters
-        public String getOrderId() { return orderId; }
-        public String getOrderDate() { return orderDate; }
-        public String getStatus() { return status; }
-        public double getTotalAmount() { return totalAmount; }
+        // Getters and Setters
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
+        public String getOrderDate() {
+            return orderDate;
+        }
+
+        public void setOrderDate(String orderDate) {
+            this.orderDate = orderDate;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public double getTotalAmount() {
+            return totalAmount;
+        }
+
+        public void setTotalAmount(double totalAmount) {
+            this.totalAmount = totalAmount;
+        }
     }
 
-    private static class Activity {
-        private final String type;
-        private final String description;
-        private final String timestamp;
+    // Activity model class with proper JavaBean conventions
+    public static class Activity {
+        private String type;
+        private String description;
+        private String timestamp;
+
+        public Activity() {
+            // Default constructor required for JavaBean
+        }
 
         public Activity(String type, String description, String timestamp) {
             this.type = type;
@@ -197,9 +293,29 @@ public class UpdateProfileServlet extends HttpServlet {
             this.timestamp = timestamp;
         }
 
-        // Getters
-        public String getType() { return type; }
-        public String getDescription() { return description; }
-        public String getTimestamp() { return timestamp; }
+        // Getters and Setters
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(String timestamp) {
+            this.timestamp = timestamp;
+        }
     }
 }

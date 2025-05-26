@@ -275,26 +275,27 @@
 
         .navbar {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.4rem;
         }
 
         .nav-link {
             font-weight: 500;
-            padding: 8px 15px;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             transition: all 0.3s ease;
-            margin: 0 5px;
         }
 
         .nav-link:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.15);
         }
 
         .nav-link.active {
-            background: rgba(255,255,255,0.3);
-            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.25);
         }
 
         .password-container {
@@ -304,7 +305,7 @@
         .password-toggle {
             position: absolute;
             right: 15px;
-            top: 42px;
+            top: 48px;
             cursor: pointer;
             color: #6c757d;
             z-index: 5;
@@ -724,50 +725,31 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="${pageContext.request.contextPath}/products">
+        <a class="navbar-brand" href="#">
             <i class="fas fa-store me-2"></i>Toy Store
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/products">
                         <i class="fas fa-home me-1"></i>Home
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/wishlist">
-                        <i class="fas fa-heart me-1"></i>Wishlist
-                        <c:if test="${wishlistCount > 0}">
-                            <span class="badge-notification">${wishlistCount}</span>
-                        </c:if>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/cart">
-                        <i class="fas fa-shopping-cart me-1"></i>Cart
-                        <c:if test="${cartCount > 0}">
-                            <span class="badge-notification">${cartCount}</span>
-                        </c:if>
-                    </a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/order/history">
-                        <i class="fas fa-history me-1"></i>Orders
+                        <i class="fas fa-history me-1"></i>Order History
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="${pageContext.request.contextPath}/update-profile">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/update-profile">
                         <i class="fas fa-user me-1"></i>Profile
                     </a>
                 </li>
                 <li class="nav-item">
                     <form action="${pageContext.request.contextPath}/logout" method="post" class="d-inline">
-                        <input type="hidden" name="csrfToken" value="${csrfToken}">
                         <button type="submit" class="nav-link btn btn-link" style="cursor: pointer;">
                             <i class="fas fa-sign-out-alt me-1"></i>Logout
                         </button>
@@ -798,20 +780,8 @@
                 </div>
             </form>
             <h2>${user.fullName}</h2>
-            <p class="text-muted">@${user.username}</p>
-            <span class="profile-badge"><i class="fas fa-star me-1"></i>Premium Member</span>
-
-            <div class="profile-progress">
-                <div class="profile-progress-bar" style="width: 75%;"></div>
-            </div>
-            <small class="text-muted">Profile 75% complete</small>
-
-            <div class="social-links">
-                <a href="#" title="Connect Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" title="Connect Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" title="Connect Google"><i class="fab fa-google"></i></a>
-                <a href="#" title="Connect Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
+            <p class="text-muted">${user.username}</p>
+            <span class="profile-badge"><i class="fas fa-star me-1"></i>Member</span>
         </div>
 
         <c:if test="${not empty success}">

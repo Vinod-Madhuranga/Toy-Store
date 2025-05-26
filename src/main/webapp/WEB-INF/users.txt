@@ -1,2 +1,2 @@
-sample,sample,sample@gmail.com,12345678,sample,0773794534,,2004-08-03,MALE,,false
 thilina,thilina,thilina@gmail.com,12345678,test,0773424534,,2025-05-03,FEMALE,,false
+sample,sample,sample@gmail.com,12345678,sample,0773794534,test,2004-08-26,MALE,,false
