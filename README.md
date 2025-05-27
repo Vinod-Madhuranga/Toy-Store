@@ -40,6 +40,18 @@ An interactive and fully functional **Toy Store Web Application** developed usin
 - Font Awesome
 
 ---
+## 🖼️ Screenshots
+
+### 📦 Login Page
+![User Login](images/login.png)
+
+### 🏠 Homepage
+![Homepage](images/home.png)
+
+### ✍️ Order Placement Page
+![Order Placement](images/orderplace.png)
+
+---
 
 ## 🔗 Links
 
