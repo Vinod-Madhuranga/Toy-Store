@@ -55,6 +55,6 @@ An interactive and fully functional **Toy Store Web Application** developed usin
 
 ## 🔗 Links
 
-- 👨‍💻 Author: [Vinod Madhuranga](https://github.com/Vinod-Madhuranga)
-- 📦 Repo: [github.com/Vinod-Madhuranga/Toy-Store](https://github.com/Vinod-Madhuranga/Toy-Store)
+- 👨‍💻 Author: [Vinod Rajapaksha](https://github.com/Vinod-Rajapaksha)
+- 📦 Repo: [github.com/Vinod-Rajapaksha/Toy-Store](https://github.com/Vinod-Rajapaksha/Toy-Store)
 
